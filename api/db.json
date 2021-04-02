@@ -1,0 +1,87 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "cotton jersey t-shirt",
+      "brand": "stone island",
+      "price": 60,
+      "storeId": 1
+    },
+    {
+      "id": 2,
+      "name": "vltn crew neck t-shirt",
+      "brand": "valentino",
+      "price": 80,
+      "storeId": 1
+    },
+    {
+      "id": 3,
+      "name": "icon t-shirt",
+      "brand": "dsquared",
+      "price": 50,
+      "storeId": 1
+    },
+    {
+      "id": 4,
+      "name": "icon tiger t-shirt",
+      "brand": "kenzo",
+      "price": 40,
+      "storeId": 1
+    },
+    {
+      "id": 5,
+      "name": "cool guy jeans",
+      "brand": "dsquared",
+      "price": 120,
+      "storeId": 2
+    },
+    {
+      "id": 6,
+      "name": "tred leather boots",
+      "brand": "alexander mcqueen",
+      "price": 230,
+      "storeId": 2
+    },
+    {
+      "id": 7,
+      "name": "diver trainers",
+      "brand": "mallet",
+      "price": 300,
+      "storeId": 3
+    },
+    {
+      "id": 8,
+      "name": "oversized trainers",
+      "brand": "alexander mcqueen",
+      "price": 220,
+      "storeId": 3
+    },
+    {
+      "id": 9,
+      "name": "speed sock trainers",
+      "brand": "balenciaga",
+      "price": 440,
+      "storeId": 3
+    },
+    {
+      "id": 9,
+      "name": "triple s trainers",
+      "brand": "balenciaga",
+      "price": 340,
+      "storeId": 3
+    },
+    {
+      "id": 10,
+      "name": "sorrento knitted trainers",
+      "brand": "dolce and gabbana",
+      "price": 420,
+      "storeId": 4
+    }
+  ],
+  "stores": [
+    { "id": 1, "name": "london store" },
+    { "id": 2, "name": "manchester store" },
+    { "id": 3, "name": "sheffield store" },
+    { "id": 4, "name": "leeds store" }
+  ]
+}
