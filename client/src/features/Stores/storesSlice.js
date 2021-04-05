@@ -1,6 +1,19 @@
+// What is Redux Toolkit?
+// Redux Toolkit is our official, opinionated, batteries-included toolset for efficient Redux development.
+// It is intended to be the standard way to write Redux logic.
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { apifetch } from "../../apiService";
+import { apifetchStores } from "../../apiService";
 
+export const fetchStores = createAsyncThunk(
+  "retailOS/stores/FETCH_STORES",
+  async () => {
+    const data = await apifetchStores();
+    return data;
+  }
+);
+
+// A createSlice() function accepts a set of reducer functions, a slice name, and an initial state value,
+// and automatically generates a slice reducer with corresponding action creators and action types.
 export const storesSlice = createSlice({
   name: "stores",
   initialState: {
@@ -9,46 +22,40 @@ export const storesSlice = createSlice({
     error: null,
   },
   reducers: {
-    add: (state, action) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-      state.results.push(action.payload);
+    addStore: (state, action) => {},
+    removeStore: (state, action) => {},
+    fetchStore: (state, action) => {},
+    fetchAllStores: (state, action) => {
+      console.log("fetchAllStores:", { results: state.status, action });
     },
-    remove: (state) => {
-      state.results.pop();
+  },
+  extraReducers: {
+    // Add reducers for additional action types here, and handle loading state as needed
+    [fetchStores.pending]: (state) => {
+      state.status = "PENDING";
     },
-    fetchAll: (state, action) => {
+    [fetchStores.fulfilled]: (state, action) => {
+      state.status = "SUCCESS";
       state.results = action.payload;
+    },
+    [fetchStores.rejected]: (state, action) => {
+      state.status = "FAILED";
+      state.error = action.error.message;
+      state.results = [];
     },
   },
 });
 
-export const { add, remove, fetchAll } = storesSlice.actions;
-
-export const fetchStores = createAsyncThunk(
-  "retailOS/stores/FETCH_STORES",
-  async () => {
-    const requestConfig = { method: "post", url: "/stores", params: {} };
-    const response = await apifetch(requestConfig);
-    return response.stores;
-  }
-);
-
-// The function below is called a thunk and allows us to perform async logic. It
-// can be dispatched like a regular action: `dispatch(fetchAllStoresAsync())`. This
-// will call the thunk with the `dispatch` function as the first argument. Async
-// code can then be executed and other actions can be dispatched
-export const fetchAllStores = () => (dispatch) => {
-  setTimeout(() => {
-    dispatch(fetchAll());
-  }, 1000);
-};
+export const {
+  addStore,
+  removeStore,
+  fetchStore,
+  fetchAllStores,
+} = storesSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state) => state.counter.value)`
-export const selectStores = (state) => state.stores.results;
+export const selectStores = (state) => state.stores;
 
 export default storesSlice.reducer;

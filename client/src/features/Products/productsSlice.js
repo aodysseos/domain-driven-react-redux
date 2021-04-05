@@ -1,5 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { apifetch } from "../../apiService";
+import { apifetchProducts } from "../../apiService";
+
+export const fetchProducts = createAsyncThunk(
+  "retailOS/stores/FETCH_PRODUCTS",
+  async () => {
+    const data = await apifetchProducts();
+    return data;
+  }
+);
 
 export const productsSlice = createSlice({
   name: "products",
@@ -8,33 +16,25 @@ export const productsSlice = createSlice({
     status: "IDLE",
     error: null,
   },
-  reducers: {
-    add: (state, action) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-      state.results.push(action.payload);
+  reducers: {},
+  extraReducers: {
+    // Add reducers for additional action types here, and handle loading state as needed
+    [fetchProducts.pending]: (state) => {
+      state.status = "PENDING";
     },
-    remove: (state) => {
-      state.results.pop();
-    },
-    fetchAll: (state, action) => {
+    [fetchProducts.fulfilled]: (state, action) => {
+      state.status = "SUCCESS";
       state.results = action.payload;
+    },
+    [fetchProducts.rejected]: (state) => {
+      state.error = "Failed to fetch products";
+      state.status = "FAILED";
+      state.results = [];
     },
   },
 });
 
 export const { add, remove, fetchAll } = productsSlice.actions;
-
-export const fetchProducts = createAsyncThunk(
-  "retailOS/products/FETCH_PRODUCTS",
-  async () => {
-    const requestConfig = { method: "post", url: "/products", params: {} };
-    const response = await apifetch(requestConfig);
-    return response.stores;
-  }
-);
 
 // The function below is called a thunk and allows us to perform async logic. It
 // can be dispatched like a regular action: `dispatch(fetchAllProducts())`. This
@@ -49,6 +49,6 @@ export const fetchAllProducts = () => (dispatch) => {
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state) => state.counter.value)`
-export const selectProducts = (state) => state.products.results;
+export const selectProducts = (state) => state.products;
 
 export default productsSlice.reducer;

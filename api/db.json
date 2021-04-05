@@ -79,9 +79,21 @@
     }
   ],
   "stores": [
-    { "id": 1, "name": "london store" },
-    { "id": 2, "name": "manchester store" },
-    { "id": 3, "name": "sheffield store" },
-    { "id": 4, "name": "leeds store" }
+    {
+      "id": 1,
+      "name": "london store"
+    },
+    {
+      "id": 2,
+      "name": "manchester store"
+    },
+    {
+      "id": 3,
+      "name": "sheffield store"
+    },
+    {
+      "id": 4,
+      "name": "leeds store"
+    }
   ]
 }
